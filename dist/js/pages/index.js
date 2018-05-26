@@ -1,13 +1,13 @@
 var vm = new Vue({
     el:'#container',
     data:{
-        novelSubjects:['武侠小说','推理小说','爱情小说','反转小说','科幻小说','恐怖小说'],
+        novelSubjects:['武侠小说','推理小说','怦然心动','反转小说','科幻小说','恐怖小说'],
         dappAddress:'n1gWbChQ3qq6sLc1V6Cn5Vwy65RnB5nU8cp',
         loveNovel:{
             title : '',
-            subject:'爱情小说',
+            subject:'怦然心动',
             content:'',
-            info:'一篇关于爱情的小说，快来加入创作吧！',
+            info:'二年级时，在看到布莱斯蓝眼睛的那一瞬间，朱莉的心就被他击中了',
             time : 0,
             creatorAddress : '',
             authors : [],
@@ -217,7 +217,7 @@ var vm = new Vue({
         var gas_price = "1000000"
         var gas_limit = "2000000"
         var callFunction = "getNovels";
-        // var callArgs = "[\"" + "爱情小说" + "\"]"; //in the form of ["args"]
+        // var callArgs = "[\"" + "怦然心动" + "\"]"; //in the form of ["args"]
         var contract = {
             "function": callFunction,
             // "args": callArgs
