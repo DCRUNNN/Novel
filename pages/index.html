@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>星云小说链</title>
+    <link rel="stylesheet" type="text/css" href="../dist/css/jquery.fullPage.css">
+    <link rel="stylesheet" type="text/css" href="../dist/css/style.css">
+    <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.css">
+
+    <script>
+        function DrawImage(ImgD,width_s,height_s){
+            /*var width_s=139;
+            var height_s=104;
+            */
+            var image=new Image();
+            image.src=ImgD.src;
+            if(image.width>0 && image.height>0){
+                flag=true;
+                if(image.width/image.height>=width_s/height_s){
+                    if(image.width>width_s){
+                        ImgD.width=width_s;
+                        ImgD.height=(image.height*width_s)/image.width;
+                    }else{
+                        ImgD.width=image.width;
+                        ImgD.height=image.height;
+                    }
+                }
+                else{
+                    if(image.height>height_s){
+                        ImgD.height=height_s;
+                        ImgD.width=(image.width*height_s)/image.height;
+                    }else{
+                        ImgD.width=image.width;
+                        ImgD.height=image.height;
+                    }
+                }
+            }
+            /*else{
+            ImgD.src="";
+            ImgD.alt=""
+            }*/
+        }
+    </script>
+
+</head>
+
+<body>
+
+<div id="container">
+
+
+    <div class="top" style="background-color: #b7e7e3; ">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="../dist/img/logo.jpg" class="img-rounded ml-logo" alt="图片路径" align="center" onload="DrawImage(this,50,50)">
+                <a class="navbar-brand" href="index.html" style="color: #3db1fa;">星云小说链</a>
+            </div>
+            <div class="col-md-4">
+                <span style="color: #204d74;text-align: center">
+                    基于星云链合作创作小说，每个人都是作家，在前人的基础上任意续写，发挥大家的脑洞，完成各种类型小说的创作。Everyone can be an author.
+                    【请上下滑动以查看不同类型的小说】
+                </span>
+            </div>
+            <div class="col-md-4">
+                <div class="" style="color: white">
+                    <br>
+                    <a class="btn btn-primary col-md-offset-8" onclick="checkID()">新建小说</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div id="dowebok">
+        <div class="section header fp-auto-height">
+            <div class="center-wrap clearfix">
+
+            </div>
+        </div>
+
+            <!--可以上下滑动-->
+            <div class="section banner">
+                <div class="center-wrap">
+                    <div class="desc banner-desc">
+                        <div class="myCard">
+                            <div class="card-body" >
+                                <div>
+                                    <br>
+                                    <h3 class="card-title" v-text="loveNovel.title"></h3>
+                                    <h5>主题：{{loveNovel.subject}}</h5>
+                                    <p class="card-text">简介：{{loveNovel.info}}</p>
+                                    <button type="button" class="myButton pull-left" id="showNovel" @click="showNovelInfo(loveNovel)">查看详情</button>
+                                    <button type="button" class="myButton pull-right" id="joinLoveNovelBT" @click="joinNovel(loveNovel)">加入创作</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="section thin">
+                <div class="center-wrap">
+                    <div class="desc thin-desc">
+
+                        <div class="myCard">
+                            <div class="card-body" >
+                                <div>
+                                    <br>
+                                    <h3 class="card-title" v-text="inferentialNovel.title"></h3>
+                                    <h5>主题：{{inferentialNovel.subject}}</h5>
+                                    <p class="card-text">简介：{{inferentialNovel.info}}</p>
+                                    <button class="myButton pull-left" id="showNovel2" @click="showNovelInfo(inferentialNovel)">查看详情</button>
+                                    <button class="myButton pull-right" id="joinInferentialNovelBT" @click="joinNovel(inferentialNovel)">加入创作</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="section screen">
+                <div class="center-wrap">
+                    <div class="desc screen-desc">
+
+                        <div class="myCard">
+                            <div class="card-body">
+                                <div>
+                                    <br>
+                                    <h3 class="card-title" v-text="scienceNovel.title"></h3>
+                                    <h5>主题：{{scienceNovel.subject}}</h5>
+                                    <p class="card-text">简介：{{scienceNovel.info}}</p>
+                                    <button class="myButton pull-left" id="showNovel3" @click="showNovelInfo(scienceNovel)">查看详情</button>
+                                    <button class="myButton pull-right" id="joinScienceNovelBT" @click="joinNovel(scienceNovel)">加入创作</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section cpu">
+                <div class="center-wrap">
+                    <div class="desc cpu-desc">
+
+                        <div class="myCard">
+                            <div class="card-body" >
+                                <div>
+                                    <br>
+                                    <h3 class="card-title" v-text="kungFuNovel.title"></h3>
+                                    <h5>主题：{{kungFuNovel.subject}}</h5>
+                                    <p class="card-text">简介：{{kungFuNovel.info}}</p>
+                                    <button class="myButton pull-left" id="showNovel4" @click="showNovelInfo(kungFuNovel)">查看详情</button>
+                                    <button class="myButton pull-right" id="joinKongFuNovelBT" @click="joinNovel(kungFuNovel)">加入创作</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="section net">
+                <div class="center-wrap">
+                    <div class="desc net-desc">
+                        <div class="myCard">
+                            <div class="card-body">
+                                <div>
+                                    <br>
+                                    <h3 class="card-title" v-text="horrorNovel.title"></h3>
+                                    <h5>主题：{{horrorNovel.subject}}</h5>
+                                    <p class="card-text">简介：{{horrorNovel.info}}</p>
+                                    <button class="myButton pull-left"  id="showNovel5" @click="showNovelInfo(horrorNovel)">查看详情</button>
+                                    <button class="myButton pull-right" id="joinHorrorNovelBT" @click="joinNovel(horrorNovel)">加入创作</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section camera">
+                <div class="center-wrap">
+                    <div class="desc camera-desc">
+                        <div class="myCard">
+                            <div class="card-body">
+                                <div>
+                                    <br>
+                                    <h3 class="card-title" v-text="reverseNovel.title"></h3>
+                                    <h5>主题：{{reverseNovel.subject}}</h5>
+                                    <p class="card-text">简介：{{reverseNovel.info}}</p>
+                                    <button class="myButton pull-left" id="showNovel6" @click="showNovelInfo(reverseNovel)">查看详情</button>
+                                    <button class="myButton pull-right" id="joinReverseNovelBT" @click="joinNovel(reverseNovel)">加入创作</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="section footer fp-auto-height" >
+                <footer style="text-align: center">
+                    <br>
+                    <div class="caption">
+                        <p>联系我们：Wechat：this_songjian</p>
+                        <p>&copy; 星云任务链 All rights reserved 2018</p>
+                    </div>
+                </footer>
+            </div>
+
+    </div>
+
+    <div class="modal fade" id="showNovelInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">查看小说</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">小说名称</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" id="novelName" name="novelName" placeholder="" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-lg-3 control-label">小说主题</label>
+                        <div class="col-lg-9">
+                            <textarea class="form-control" id="novelSubject" name="novelSubject" rows="5" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="col-lg-3 control-label">小说作者</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" id="novelAuthor" name="novelAuthor" placeholder="" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-lg-3 control-label">小说内容</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" id="novelContent" name="novelContent" placeholder="" required>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin: 10px auto; width: 150px;">
+                        <span class="badge badge-success" id="numOfAgree">0</span>
+                        <button type="button" class="btn btn-primary" id="agreeNovelBT" onclick="agree()">赞</button>
+                        <button type="button" class="btn btn-danger" id="dissNovelBT" onclick="disagree()">踩</button>
+                        <span class="badge badge-danger" id="numOfDiss">0</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" @click="joinNovelModal()" >加入创作</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+</div>
+
+</body>
+
+
+<script src="../dist/js/jquery-3.3.1.min.js"></script>
+<script src="../dist/js/jquery.fullPage.js"></script>
+<script src="../dist/js/nebulas/nebPay.js"></script>
+<script src="../dist/js/nebulas/nebulas.js"></script>
+
+<script src="../resources/bootstrap/js/bootstrap.js"></script>
+
+<script>
+    $(function(){
+        var $mlNav = $('.ml-nav');
+        $('#dowebok').fullpage({
+            verticalCentered: !1,
+            navigation: !0,
+            onLeave: function(index, nextIndex, direction){
+                if(index == 2 && direction == 'up'){
+                    $mlNav.animate({
+                        top: 80
+                    }, 680);
+                } else if(index == 1 && direction == 'down') {
+                    $mlNav.animate({
+                        top: 0
+                    }, 400);
+                } else if(index == 3 && direction == 'up') {
+                    $mlNav.animate({
+                        top: 0
+                    }, 500);
+                } else {
+                    $mlNav.animate({
+                        top: -66
+                    }, 400);
+                }
+            }
+        });
+    });
+</script>
+
+
+<script>
+    function checkID() {
+        window.postMessage({
+            "target": "contentscript",
+            "data": {},
+            "method": "getAccount",
+        }, "*");
+        window.addEventListener('message', function (e) {
+            if (e.data && e.data.data) {
+                if (e.data.data.account) {//这就是当前钱包中的地址
+                    var account = e.data.data.account;
+                    if(account=='n1QVFUAEEE8Nz3TsCe2TtcW53ZVrR5Qb9af' || account=='n1Ft17PTSw7YjaQULBiKyBeMguZCcECqHek'){
+                        window.location.href='createNovel.html';
+                    }else{
+                        alert("不好意思，只有管理员才可以新建小说，您可以去参与小说创作！");
+                        return;
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+<script>
+
+    "use strict";
+
+    var dappContactAddress = "n1gWbChQ3qq6sLc1V6Cn5Vwy65RnB5nU8cp";
+    var nebulas = require("nebulas"),
+        Account = nebulas.Account,
+        neb = new nebulas.Neb();
+    neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"))
+
+    // NebPay SDK 为不同平台的交易提供了统一的支付接口
+    // 开发者在Dapp页面中使用NebPay API可以通过浏览器插件钱包、手机app钱包等实现交易支付和合约调用。
+    var NebPay = require("nebpay");
+    var nebPay = new NebPay();
+
+    // 执行合约返回的交易流水号，用于查询交易信息
+    var serialNumber;
+
+    function agree() {
+        var subject = $('#novelSubject').val();
+        if(subject==""){
+            alert("主题不能为空，请检查网络连接是否正常！");
+            return;
+        }
+
+        var to = dappContactAddress;
+        var value = "0";
+        var callFunction = "voteToNovel";
+        var callArgs = "[\"" + subject + "\",\"" + "agree" + "\"]";
+        console.log(callArgs);
+
+        serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
+            listener: function (resp) {
+                console.log("thecallback is " + resp)
+            }
+        });
+    }
+
+    function disagree() {
+        var subject = $('#novelSubject').val();
+        if(subject==""){
+            alert("主题不能为空，请检查网络连接是否正常！");
+            return;
+        }
+
+        var to = dappContactAddress;
+        var value = "0";
+        var callFunction = "voteToNovel";
+        var callArgs = "[\"" + subject + "\",\"" + "disagree" + "\"]";
+        console.log(callArgs);
+
+        serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
+            listener: function (resp) {
+                console.log("thecallback is " + resp)
+            }
+        });
+    }
+
+</script>
+
+<script src="../resources/vue/vue.js"></script>
+<script src="../resources/vue-resource/vue-resource.js"></script>
+
+<script src="../dist/js/pages/index.js"></script>
+
+
+
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑小说</title>
+
+    <link rel="stylesheet" type="text/css" href="../dist/css/jquery.fullPage.css">
+    <link rel="stylesheet" type="text/css" href="../dist/css/style.css">
+    <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../resources/font-awesome/css/font-awesome.css">
+
+</head>
+<body>
+
+<div id="container">
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <h3>编辑小说</h3>
+        </div>
+
+        <div class="panel-body">
+
+            <form role="form">
+                <div class="form-group" style="margin-left:20px">
+                    <label for="name">小说标题</label>
+                    <input type="text" class="form-control" placeholder="小说标题" id="novelTitle" disabled>
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label for="name">小说主题</label>
+                    <input type="text" class="form-control" placeholder="小说主题" id="novelSubject" disabled>
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label for="name">小说现有内容</label>
+                    <textarea class="form-control" id="novelContent" rows="10" disabled></textarea>
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label for="name">续写小说内容</label>
+                    <textarea class="form-control" id="novelNewContent" rows="20"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-lg btn-block" id="saveNovelBT">保存小说</button>
+                    <a href="index.html"><button type="button" class="btn btn-default btn-lg btn-block">返回</button></a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="section footer fp-auto-height" >
+
+        <footer style="text-align: center">
+            <br>
+            <div class="caption">
+                <p>联系我们：Wechat：this_songjian</p>
+                <p>&copy; 星云任务链 All rights reserved 2018</p>
+            </div>
+        </footer>
+    </div>
+</div>
+
+</body>
+
+
+<script src="../dist/js/jquery-3.3.1.min.js"></script>
+<script src="../dist/js/jquery.fullPage.js"></script>
+
+<script src="../resources/vue/vue.js"></script>
+<script src="../resources/vue-resource/vue-resource.js"></script>
+
+<script src="../resources/bootstrap/js/bootstrap.js"></script>
+
+<script src="../dist/js/nebulas/nebPay.js"></script>
+<script src="../dist/js/nebulas/nebulas.js"></script>
+
+<script src="../dist/js/pages/editNovel.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+        (function(){
+            var novel = JSON.parse(this.getCookieValue("novel"));
+            console.log(novel)
+            $('#novelTitle').val(novel.title);
+            $('#novelSubject').val(novel.subject);
+            $('#novelContent').val(novel.content);
+        })();
+    });
+</script>
+
+<script>
+
+    "use strict";
+
+    var dappContactAddress = "n1gWbChQ3qq6sLc1V6Cn5Vwy65RnB5nU8cp";
+    var nebulas = require("nebulas"),
+        Account = nebulas.Account,
+        neb = new nebulas.Neb();
+    neb.setRequest(new nebulas.HttpRequest("https://mainnet.nebulas.io"))
+
+    // NebPay SDK 为不同平台的交易提供了统一的支付接口
+    // 开发者在Dapp页面中使用NebPay API可以通过浏览器插件钱包、手机app钱包等实现交易支付和合约调用。
+    var NebPay = require("nebpay");
+    var nebPay = new NebPay();
+
+    // 执行合约返回的交易流水号，用于查询交易信息
+    var serialNumber;
+
+    $('#saveNovelBT').click(function(){
+        var title = $('#novelTitle').val();
+        var subject = $('#novelSubject').val();
+        var content = $('#novelNewContent').val();
+
+        var to = dappContactAddress;
+        var value = "0";
+        var callFunction = "updateNovel";
+        var callArgs = "[\"" + subject + "\",\"" + content + "\"]";
+        console.log(callArgs);
+
+        serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
+            listener: function (resp) {
+                console.log("thecallback is " + resp)
+            }
+        });
+    })
+
+</script>
+
+</html>
